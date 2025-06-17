@@ -32,17 +32,25 @@ def reserver():
         telephone = request.form['telephone']
         date = request.form['date']
         heure = request.form['heure']
-        personnes = request.form['personnes']
-        nouvelle_resa = Reservation(nom=nom, telephone=telephone, date=date, heure=heure, personnes=personnes)
+        personnes = int(request.form['personnes'])  # Conversion en entier
+
+        nouvelle_resa = Reservation(
+            nom=nom,
+            telephone=telephone,
+            date=date,
+            heure=heure,
+            personnes=personnes
+        )
+
         db.session.add(nouvelle_resa)
         db.session.commit()
         return redirect(url_for('accueil'))
+    
     return render_template("reservation.html")
 
+# Lancement de l'application
 if __name__ == "__main__":
     with app.app_context():
-        db.create_all+()
-    #app.run(debug=True, use_reloader=False)
+        db.create_all()
     app.run(debug=True)
-
-
+    
